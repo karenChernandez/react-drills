@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+class App extends Component{
+  constructor(){
+    super();
+
+    this.state={
+      foodList: ["spaghetti", "ice cream", "sushi", "bologna", "cheese"],
+      filterFood: ''
+    }
+  }
+  handleEvent=(value)=>{
+    this.setState({ filterFood:value})
+  }
+  render(){
+    let foodsToDisplay = this.state.foodList
+    .filter((foodItem, index)=>{
+      return foodItem.includes(this.state.filterFood);
+    }).map((foodItem,index)=>{
+      return <div key={index}>
+        <h1>{foodItem}</h1>
+      </div>
+    })
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input onChange={(event)=>this.handleEvent(event.target.value)}></input>
+      {foodsToDisplay}
     </div>
   );
+  }
 }
 
 export default App;
